@@ -1,7 +1,8 @@
 
+
 function LookupFunc($moduleName, $functionName) {
 
-  $Assemblies = [AppDomain]::CurrentDomain.GetAssemblies() | Where-Object { $_.GlobalAssemblyCache -And $_.Location.Split('\\')[-1].Equals('System.dll') }
+  $systemdll = [AppDomain]::CurrentDomain.GetAssemblies() | Where-Object { $_.GlobalAssemblyCache -And $_.Location.Split('\\')[-1].Equals('System.dll') }
   $unsafeObj = $systemdll.GetType('Microsoft.Win32.UnsafeNativeMethods')
   $GetModuleHandleArray = $unsafeObj.GetMethods() | ForEach-Object {If ($_.Name -eq "GetModuleHandle") {$_} } 
   $GetProcAddressArray = $unsafeObj.GetMethods() | ForEach-Object {If ($_.Name -eq "GetProcAddress") {$_}   }
